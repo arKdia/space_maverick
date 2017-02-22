@@ -1,6 +1,7 @@
 # space_maverick
 
  Ericks++: Erick T, Erick H, Andrew P, JT
+ 
  please modify (syntax included) as needed to make the project design clearer)
 
 -So far what we need to do-
