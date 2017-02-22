@@ -11,7 +11,7 @@ GRAPHIC:
 		Images / Sound / Menu
 
 ENEMIES:
-		Change asteroid shape into enemy’s shape
+		Change asteroid shape into enemy’s shape.
 		Physics of ship destruction:
 		  - how long will the enemy ship survive [how many collisions allowed]
 		  - Positioning of ships: how to make enemy spawn and surround ship
