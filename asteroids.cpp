@@ -33,14 +33,33 @@
 #include "ppm.h"
 #include "log.h"
 #include "fonts.h"
-extern "C" {
-    #include "andrewP.cpp"
-}
+#include "andrewP.cpp"
+#include "erickT.cpp"
+
+/*#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <time.h>
+#include <math.h>
+#include <X11/Xlib.h>
+#include <X11/keysym.h>
+#include <GL/glx.h>
+//#include "log.h"
+//#include "ppm.h"
+//
+*/
+//extern "C" {
+	#include "fonts.h"
+//}
+
 
 //defined types
 typedef float Flt;
 typedef float Vec[3];
 typedef Flt	Matrix[4][4];
+int menu1 = 0;
+
 
 //macros
 #define rnd() (((double)rand())/(double)RAND_MAX)
@@ -83,6 +102,7 @@ void timeCopy(struct timespec *dest, struct timespec *source) {
 //=======================================================================
 
 int xres=1250, yres=900;
+int state_menu = 0;
 
 struct Ship {
 	Vec dir;
@@ -403,9 +423,13 @@ int check_keys(XEvent *e)
 	switch(key) {
 		case XK_Escape:
 			return 1;
-        case XK_h: {
+        /*case XK_h: {
             h = help(h, 800);
-            break; }
+            break; }*/
+		case XK_m:
+            state_menu ^= 1;
+
+			break;
 		case XK_f:
 			break;
 		case XK_s:
@@ -728,8 +752,19 @@ void render(Game *g)
 	glBegin(GL_POINTS);
 	glVertex2f(0.0f, 0.0f);
 	glEnd();
-	glPopMatrix();
-	if (keys[XK_Up]) {
+    glPopMatrix();
+
+    if (state_menu) {
+      //glClearColor(1.0, 1.0, 1.0, 1.0);
+      //glClearColor(GL_COLOR_BUFFER_BIT);
+      //glBindTexture(GL_TEXTURE_2D, 0);
+      glDisable(GL_TEXTURE_2D);
+      menu();
+      //glEnable(GL_TEXTURE_2D);
+    }
+
+
+    if (keys[XK_Up]) {
 		int i;
 		//draw thrust
 		Flt rad = ((g->ship.angle+90.0f) / 360.0f) * PI * 2.0f;
