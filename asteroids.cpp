@@ -1,6 +1,6 @@
-//modified by:
-//date:
-//purpose:
+//modified by: Andrew Parker
+//date: February 2, 2017
+//purpose: Lab Assignment 2
 //
 //program: asteroids
 //author:  Gordon Griesel
@@ -32,16 +32,37 @@
 #include <GL/glx.h>
 #include "ppm.h"
 #include "log.h"
-extern "C" {
 #include "erickH.cpp"
-}
 
 #include "fonts.h"
+#include "fonts.h"
+#include "andrewP.cpp"
+#include "erickT.cpp"
+
+/*#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <time.h>
+#include <math.h>
+#include <X11/Xlib.h>
+#include <X11/keysym.h>
+#include <GL/glx.h>
+//#include "log.h"
+//#include "ppm.h"
+//
+*/
+//extern "C" {
+	#include "fonts.h"
+//}
+
 
 //defined types
 typedef float Flt;
 typedef float Vec[3];
 typedef Flt	Matrix[4][4];
+int menu1 = 0;
+
 
 //macros
 #define rnd() (((double)rand())/(double)RAND_MAX)
@@ -84,6 +105,7 @@ void timeCopy(struct timespec *dest, struct timespec *source) {
 //=======================================================================
 
 int xres=1250, yres=900;
+int state_menu = 0;
 
 struct Ship {
 	Vec dir;
@@ -152,8 +174,10 @@ struct Game {
 };
 
 int keys[65536];
+int h=0;
 
 //function prototypes
+extern int help(int, int);
 void initXWindows(void);
 void init_opengl(void);
 void cleanupXWindows(void);
@@ -382,7 +406,6 @@ int check_keys(XEvent *e)
 	//keyboard input?
 	static int shift=0;
 	int key = XLookupKeysym(&e->xkey, 0);
-	//
 	//This code maintains an array of key status values.
 	if (e->type == KeyRelease) {
 		keys[key]=0;
@@ -403,6 +426,13 @@ int check_keys(XEvent *e)
 	switch(key) {
 		case XK_Escape:
 			return 1;
+        /*case XK_h: {
+            h = help(h, 800);
+            break; }*/
+		case XK_m:
+            state_menu ^= 1;
+
+			break;
 		case XK_f:
 			break;
 		case XK_s:
@@ -419,46 +449,30 @@ int check_keys(XEvent *e)
 
 void deleteAsteroid(Game *g, Asteroid *node)
 {
-	//if (g) {}    //you can remove this line
-	//if (node) {} //you can remove this line
+	if (g) {}    //you can remove this line
+	if (node) {} //you can remove this line
 
 	//to do:
 	//Delete a node from asteroid linked-list
-  //Asteroid *nn = node;
-  if (node->next == NULL){ //last NOde
-    node->prev->next = NULL;
-  }
-  else if (node->prev == NULL){ // first
-//    node->next = node->next->next;
-    node->next->prev = NULL;
-    g->ahead = node->next;
-  }
-  else{
-    node->prev->next = node->next; // current
-    node->next->prev = node->prev;
-  }
+	if (node->prev == NULL && node->next == NULL) {
+	    g->ahead = NULL;
+	    delete node;
+	}
+	else if (node->prev == NULL) {
+	    g->ahead = node->next;
+	    node->next->prev = NULL;
+	    delete node;
+	}
+	else if (node->next == NULL) {
+	    node->prev->next = NULL;
+	    delete node;
+	}
+	else if (node->next != NULL && node->prev != NULL) {
+	    node->prev->next = node->next;
+	    node->next->prev = node->prev;
+	    delete node;
+	}
 
-   
- // g->nasteroids--;
-//  g->ahead = node;
-  //delete nn;
-
-
-  //node->next = node->next->next;
-
-  //node->prev->next = NULL;
-  //g->ahead = node;
-		
-  /*Add to front
-  a->next = g->ahead;
-		if (g->ahead != NULL)
-			g->ahead->prev = a;
-		g->ahead = a;
-		g->nasteroids++;
-  */
-
-//	struct Asteroid *prev;
-//	struct Asteroid *next;
 
 
 
@@ -521,6 +535,9 @@ void physics(Game *g)
 		//How long has bullet been alive?
 		double ts = timeDiff(&b->time, &bt);
 		if (ts > 2.5f) {
+		    std::cout << "max time passed" << std::endl;
+		    g->barr[i] = g->barr[--g->nbullets];
+		
 			//Delete bullet here.
 
 
@@ -612,12 +629,19 @@ void physics(Game *g)
 					deleteAsteroid(g, a);
 					a = savea;
 					g->nasteroids--;
+					std::cout << "small asteroid collision" << std::endl;
+					g->barr[i] = g->barr[--g->nbullets];
 				}
 				//Delete bullet here.
 				//How?
 				//Move the array's last element to where this element is.	
 				//Then update the array count, nbullets.
 				//--like we did with water particles--
+				/*if (dist < (a->radius*a->radius)) {
+					if (a->radius < 20.0f) {
+					    g->barr[i] = g->barr[--g->nbullets];
+					}
+				}*/
 
 
 
@@ -732,8 +756,19 @@ void render(Game *g)
 	glBegin(GL_POINTS);
 	glVertex2f(0.0f, 0.0f);
 	glEnd();
-	glPopMatrix();
-	if (keys[XK_Up]) {
+    glPopMatrix();
+
+    if (state_menu) {
+      //glClearColor(1.0, 1.0, 1.0, 1.0);
+      //glClearColor(GL_COLOR_BUFFER_BIT);
+      //glBindTexture(GL_TEXTURE_2D, 0);
+      glDisable(GL_TEXTURE_2D);
+      menu();
+      //glEnable(GL_TEXTURE_2D);
+    }
+
+
+    if (keys[XK_Up]) {
 		int i;
 		//draw thrust
 		Flt rad = ((g->ship.angle+90.0f) / 360.0f) * PI * 2.0f;
@@ -800,6 +835,5 @@ void render(Game *g)
 		glEnd();
 	}
 }
-
 
 
