@@ -32,6 +32,8 @@
 #include <GL/glx.h>
 #include "ppm.h"
 #include "log.h"
+#include "erickT.cpp"
+
 //extern "C" {
 	#include "fonts.h"
 //}
@@ -40,6 +42,8 @@
 typedef float Flt;
 typedef float Vec[3];
 typedef Flt	Matrix[4][4];
+int menu1 = 0;
+
 
 //macros
 #define rnd() (((double)rand())/(double)RAND_MAX)
