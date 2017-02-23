@@ -1,6 +1,6 @@
-//modified by:
-//date:
-//purpose:
+//modified by: Andrew Parker
+//date: February 2, 2017
+//purpose: Lab Assignment 2
 //
 //program: asteroids
 //author:  Gordon Griesel
@@ -32,9 +32,7 @@
 #include <GL/glx.h>
 #include "ppm.h"
 #include "log.h"
-//extern "C" {
-	#include "fonts.h"
-//}
+#include "fonts.h"
 
 //defined types
 typedef float Flt;
@@ -417,46 +415,30 @@ int check_keys(XEvent *e)
 
 void deleteAsteroid(Game *g, Asteroid *node)
 {
-	//if (g) {}    //you can remove this line
-	//if (node) {} //you can remove this line
+	if (g) {}    //you can remove this line
+	if (node) {} //you can remove this line
 
 	//to do:
 	//Delete a node from asteroid linked-list
-  //Asteroid *nn = node;
-  if (node->next == NULL){ //last NOde
-    node->prev->next = NULL;
-  }
-  else if (node->prev == NULL){ // first
-//    node->next = node->next->next;
-    node->next->prev = NULL;
-    g->ahead = node->next;
-  }
-  else{
-    node->prev->next = node->next; // current
-    node->next->prev = node->prev;
-  }
+	if (node->prev == NULL && node->next == NULL) {
+	    g->ahead = NULL;
+	    delete node;
+	}
+	else if (node->prev == NULL) {
+	    g->ahead = node->next;
+	    node->next->prev = NULL;
+	    delete node;
+	}
+	else if (node->next == NULL) {
+	    node->prev->next = NULL;
+	    delete node;
+	}
+	else if (node->next != NULL && node->prev != NULL) {
+	    node->prev->next = node->next;
+	    node->next->prev = node->prev;
+	    delete node;
+	}
 
-   
- // g->nasteroids--;
-//  g->ahead = node;
-  //delete nn;
-
-
-  //node->next = node->next->next;
-
-  //node->prev->next = NULL;
-  //g->ahead = node;
-		
-  /*Add to front
-  a->next = g->ahead;
-		if (g->ahead != NULL)
-			g->ahead->prev = a;
-		g->ahead = a;
-		g->nasteroids++;
-  */
-
-//	struct Asteroid *prev;
-//	struct Asteroid *next;
 
 
 
@@ -519,6 +501,9 @@ void physics(Game *g)
 		//How long has bullet been alive?
 		double ts = timeDiff(&b->time, &bt);
 		if (ts > 2.5f) {
+		    std::cout << "max time passed" << std::endl;
+		    g->barr[i] = g->barr[--g->nbullets];
+		
 			//Delete bullet here.
 
 
@@ -610,12 +595,19 @@ void physics(Game *g)
 					deleteAsteroid(g, a);
 					a = savea;
 					g->nasteroids--;
+					std::cout << "small asteroid collision" << std::endl;
+					g->barr[i] = g->barr[--g->nbullets];
 				}
 				//Delete bullet here.
 				//How?
 				//Move the array's last element to where this element is.	
 				//Then update the array count, nbullets.
 				//--like we did with water particles--
+				/*if (dist < (a->radius*a->radius)) {
+					if (a->radius < 20.0f) {
+					    g->barr[i] = g->barr[--g->nbullets];
+					}
+				}*/
 
 
 
@@ -797,6 +789,5 @@ void render(Game *g)
 		glEnd();
 	}
 }
-
 
 
