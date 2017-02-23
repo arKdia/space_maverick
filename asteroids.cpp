@@ -32,6 +32,9 @@
 #include <GL/glx.h>
 #include "ppm.h"
 #include "log.h"
+#include "erickH.cpp"
+
+#include "fonts.h"
 #include "fonts.h"
 #include "andrewP.cpp"
 #include "erickT.cpp"
@@ -727,6 +730,7 @@ void render(Game *g)
 	r.bot = yres - 20;
 	r.left = 10;
 	r.center = 0;
+	//Maverick();
 	ggprint8b(&r, 16, 0x00ff0000, "cs335 - Asteroids");
 	ggprint8b(&r, 16, 0x00ffff00, "n bullets: %i", g->nbullets);
 	ggprint8b(&r, 16, 0x00ffff00, "n asteroids: %i", g->nasteroids);
