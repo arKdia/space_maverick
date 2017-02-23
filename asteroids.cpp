@@ -61,7 +61,7 @@
 typedef float Flt;
 typedef float Vec[3];
 typedef Flt	Matrix[4][4];
-int menu1 = 0;
+//int menu1 = 0;
 
 
 //macros
@@ -508,6 +508,7 @@ void buildAsteroidFragment(Asteroid *ta, Asteroid *a)
 
 void physics(Game *g)
 {
+    if(!state_menu){
 	Flt d0,d1,dist;
 	//Update ship position
 	g->ship.pos[0] += g->ship.vel[0];
@@ -719,6 +720,7 @@ void physics(Game *g)
 			g->nbullets++;
 		}
 	}
+    }
 }
 
 void render(Game *g)
