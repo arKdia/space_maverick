@@ -1,6 +1,17 @@
 //needs: xres, yres
-/*void menu(void) {
+#include "fonts.h"
+
+void menu(void) {
+    
+  //glClearColor(1.0, 1.0, 1.0, 1.0);
+  //glClearColor(GL_COLOR_BUFFER_BIT);
+  //glDisable(Gl_TEXTURE_2D);
+  //glBindTexture(GL_TEXTURE_2D, 0);
+
   Rect m;
+
+  int xres = 1250;
+  int yres = 900;
 
   glColor3f(1.0,0.0,0.0); // for each color highest = 1, lowest 0;
   int cx = xres / 2;
@@ -21,5 +32,7 @@
   ggprint8b(&m, 16,  0x00ffff00, "This is the Menu");
   ggprint8b(&m, 16, 0, "This is the first option");
 
+ // glEnable(GL_TEXTURE_2D);
+
 }
-*/
+
