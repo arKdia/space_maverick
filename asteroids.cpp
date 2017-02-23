@@ -33,6 +33,9 @@
 #include "ppm.h"
 #include "log.h"
 #include "fonts.h"
+extern "C" {
+    #include "andrewP.cpp"
+}
 
 //defined types
 typedef float Flt;
@@ -148,8 +151,10 @@ struct Game {
 };
 
 int keys[65536];
+int h=0;
 
 //function prototypes
+extern int help(int, int);
 void initXWindows(void);
 void init_opengl(void);
 void cleanupXWindows(void);
@@ -378,7 +383,6 @@ int check_keys(XEvent *e)
 	//keyboard input?
 	static int shift=0;
 	int key = XLookupKeysym(&e->xkey, 0);
-	//
 	//This code maintains an array of key status values.
 	if (e->type == KeyRelease) {
 		keys[key]=0;
@@ -399,6 +403,9 @@ int check_keys(XEvent *e)
 	switch(key) {
 		case XK_Escape:
 			return 1;
+        case XK_h: {
+            h = help(h, 800);
+            break; }
 		case XK_f:
 			break;
 		case XK_s:
