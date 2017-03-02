@@ -22,7 +22,7 @@ void help(int yres)
     Rect re;
     glEnable(GL_TEXTURE_2D);
 
-    re.bot = yres - 820;
+    re.bot = yres/11;
     re.left = 10;
     re.center = 0;
 

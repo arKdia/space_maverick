@@ -15,13 +15,14 @@ void Maverick () {
 }
 
 
-void Maverick2 () {
+void Maverick2 (int yres) {
     char name[10] = {"mavERICK"};
 
     Rect maverick;
     glEnable(GL_TEXTURE_2D);
 
-    maverick.bot = yres - 820;
-    maverick.left = 10;
+    maverick.bot = yres/11;
+    maverick.left = 850;
     maverick.center = 0;
+    ggprint16(&maverick, 0, 0x00ffffff, name);
 }

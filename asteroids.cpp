@@ -172,6 +172,7 @@ int keys[65536];
 extern void help(int);
 extern void menu( char[], int );
 extern void Maverick( );
+extern void Maverick2(int );
   
 void initXWindows(void);
 void init_opengl(void);
@@ -733,6 +734,7 @@ void render(Game *g)
 	r.center = 0;
 
 	Maverick();
+	Maverick2(yres);
 
 	ggprint8b(&r, 16, 0x00ff0000, "cs335 - Asteroids");
 	ggprint8b(&r, 16, 0x00ffff00, "n bullets: %i", g->nbullets);
