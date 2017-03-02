@@ -32,6 +32,9 @@
 #include <GL/glx.h>
 #include "ppm.h"
 #include "log.h"
+#include "erickH.cpp"
+
+#include "fonts.h"
 #include "fonts.h"
 #include "andrewP.cpp"
 #include "erickT.cpp"
@@ -58,7 +61,7 @@
 typedef float Flt;
 typedef float Vec[3];
 typedef Flt	Matrix[4][4];
-int menu1 = 0;
+//int menu1 = 0;
 
 
 //macros
@@ -505,6 +508,7 @@ void buildAsteroidFragment(Asteroid *ta, Asteroid *a)
 
 void physics(Game *g)
 {
+    if(!state_menu){
 	Flt d0,d1,dist;
 	//Update ship position
 	g->ship.pos[0] += g->ship.vel[0];
@@ -716,6 +720,7 @@ void physics(Game *g)
 			g->nbullets++;
 		}
 	}
+    }
 }
 
 void render(Game *g)
@@ -727,6 +732,7 @@ void render(Game *g)
 	r.bot = yres - 20;
 	r.left = 10;
 	r.center = 0;
+	//Maverick();
 	ggprint8b(&r, 16, 0x00ff0000, "cs335 - Asteroids");
 	ggprint8b(&r, 16, 0x00ffff00, "n bullets: %i", g->nbullets);
 	ggprint8b(&r, 16, 0x00ffff00, "n asteroids: %i", g->nasteroids);
