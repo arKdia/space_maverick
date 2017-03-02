@@ -1,5 +1,5 @@
 //Andrew Parker
-//February 23, 2017
+//March 2, 2017
 //Group 6 - Lab 5
 //
 //
@@ -14,34 +14,21 @@
 
 using namespace std;
 
-int help(int h, int WINDOW_HEIGHT)
+void help(int yres)
 {
-    char text[3][50] = {"use space to shoot.", "use up key for thrust.",
-        "use left and right keys to change direction."};
+    char text[3][60] = {"Use space to shoot.", 
+	"Use up arrow key for thrust.",
+        "Use left and right arrow keys to change direction."};
     Rect re;
-    if (h == 0) {
-        h = 1;
-        re.bot = WINDOW_HEIGHT - 150;
-        re.left = 50;
-        re.center = 0;
-        ggprint16 (&re, 0, 0xffffffff, text[0]);
-        re.bot = WINDOW_HEIGHT - 180;
-        ggprint16 (&re, 0, 0xffffffff, text[1]);
-        re.bot = WINDOW_HEIGHT - 210;
-        ggprint16 (&re, 0, 0xffffffff, text[2]);
-        return h;
-    }
-    else {
-        re.bot = WINDOW_HEIGHT + 20;
-        re.left = 50;
-        re.center = 0;
-        char text[3][50] = {"Use space to shoot.", "Use up key for thrust.",
-            "Use left and right keys to change direction."};
-        ggprint16 (&re, 0, 0xffffffff, text[0]);
-        ggprint16 (&re, 0, 0xffffffff, text[1]);
-        ggprint16 (&re, 0, 0xffffffff, text[2]);
-        h = 0;
-        return h;
+    glEnable(GL_TEXTURE_2D);
+
+    re.bot = yres - 820;
+    re.left = 10;
+    re.center = 0;
+
+    for (int i = 0; i < 3; i++) {
+	ggprint16 (&re, 0, 0x00aaff00, text[i]);
+	re.bot = re.bot - 30;
     }
 }
 

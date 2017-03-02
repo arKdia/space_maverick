@@ -33,9 +33,14 @@
 #include "ppm.h"
 #include "log.h"
 
+#include "fonts.h"
+//#include "fonts.h"
+//#include "andrewP.cpp"
+#include "erickT.cpp"
 //#include "erickH.cpp"
 //#include "andrewP.cpp"
 //#include "erickT.cpp"
+
 
 #include "fonts.h"
 
@@ -91,6 +96,7 @@ void timeCopy(struct timespec *dest, struct timespec *source) {
 
 //====== GOBAL VARIABLES!!
 int xres=1250, yres=900;
+int state_help = 0;
 int state_menu = 0;          //menu is at end of file
 
 class Input {                //input at end of file
@@ -170,10 +176,9 @@ struct Game {
 };
 
 int keys[65536];
-int h=0;
 
 //function prototypes
-extern int help(int, int);
+extern void help(int);
 extern void menu( char[], int );
 extern void Maverick( );
   
@@ -427,9 +432,9 @@ int check_keys(XEvent *e)
 	switch(key) {
 		case XK_Escape:
 			return 1;
-        /*case XK_h: {
-            h = help(h, 800);
-            break; }*/
+    case XK_h: {
+      state_help ^= 1;;
+      break; }
 		case XK_m:  
             //cout << key << endl;
             state_menu ^= 1;
@@ -766,6 +771,10 @@ void render(Game *g)
 	glEnd();
     glPopMatrix();
 
+    if (state_help) {
+	glDisable(GL_TEXTURE_2D);
+	help(yres);
+    }
 
     if (keys[XK_Up]) {
 		int i;
