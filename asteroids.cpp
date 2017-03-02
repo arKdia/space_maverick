@@ -32,37 +32,19 @@
 #include <GL/glx.h>
 #include "ppm.h"
 #include "log.h"
-#include "erickH.cpp"
+
+//#include "erickH.cpp"
+//#include "andrewP.cpp"
+//#include "erickT.cpp"
 
 #include "fonts.h"
-#include "fonts.h"
-#include "andrewP.cpp"
-#include "erickT.cpp"
 
-/*#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <time.h>
-#include <math.h>
-#include <X11/Xlib.h>
-#include <X11/keysym.h>
-#include <GL/glx.h>
-//#include "log.h"
-//#include "ppm.h"
-//
-*/
-//extern "C" {
-	#include "fonts.h"
-//}
-
+using namespace std;
 
 //defined types
 typedef float Flt;
 typedef float Vec[3];
 typedef Flt	Matrix[4][4];
-//int menu1 = 0;
-
 
 //macros
 #define rnd() (((double)rand())/(double)RAND_MAX)
@@ -104,8 +86,20 @@ void timeCopy(struct timespec *dest, struct timespec *source) {
 }
 //=======================================================================
 
+
+//====== GOBAL VARIABLES!!
 int xres=1250, yres=900;
-int state_menu = 0;
+int state_menu = 0;          //menu is at end of file
+
+class Input {                //input at end of file
+  public:
+    char text[100];
+    int size;
+    Input() {
+      text[0] = '\0';
+      size = 12;
+    }
+}input;
 
 struct Ship {
 	Vec dir;
@@ -178,6 +172,10 @@ int h=0;
 
 //function prototypes
 extern int help(int, int);
+extern void menu( char[], int );
+extern void Maverick( char[], int );
+extern void Maverick ( int[], int);
+  
 void initXWindows(void);
 void init_opengl(void);
 void cleanupXWindows(void);
@@ -188,6 +186,7 @@ void init(Game *g);
 void init_sounds(void);
 void physics(Game *game);
 void render(Game *game);
+
 
 int main(void)
 {
@@ -406,6 +405,7 @@ int check_keys(XEvent *e)
 	//keyboard input?
 	static int shift=0;
 	int key = XLookupKeysym(&e->xkey, 0);
+    cout << key << endl;
 	//This code maintains an array of key status values.
 	if (e->type == KeyRelease) {
 		keys[key]=0;
@@ -430,9 +430,12 @@ int check_keys(XEvent *e)
             h = help(h, 800);
             break; }*/
 		case XK_m:
+            //cout << key << endl;
             state_menu ^= 1;
-
 			break;
+        case XK_x:
+            strcat(input.text,"x"); //input to text box
+            break;
 		case XK_f:
 			break;
 		case XK_s:
@@ -760,15 +763,6 @@ void render(Game *g)
 	glEnd();
     glPopMatrix();
 
-    if (state_menu) {
-      //glClearColor(1.0, 1.0, 1.0, 1.0);
-      //glClearColor(GL_COLOR_BUFFER_BIT);
-      //glBindTexture(GL_TEXTURE_2D, 0);
-      glDisable(GL_TEXTURE_2D);
-      menu();
-      //glEnable(GL_TEXTURE_2D);
-    }
-
 
     if (keys[XK_Up]) {
 		int i;
@@ -836,6 +830,10 @@ void render(Game *g)
 		glVertex2f(b->pos[0]+1.0f, b->pos[1]+1.0f);
 		glEnd();
 	}
+    if (state_menu) {
+      glDisable(GL_TEXTURE_2D);
+      menu(input.text, input.size);
+    }
 }
 
 
