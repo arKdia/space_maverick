@@ -34,15 +34,6 @@
 #include "log.h"
 
 #include "fonts.h"
-//#include "fonts.h"
-//#include "andrewP.cpp"
-#include "erickT.cpp"
-//#include "erickH.cpp"
-//#include "andrewP.cpp"
-//#include "erickT.cpp"
-
-
-#include "fonts.h"
 
 using namespace std;
 
@@ -432,11 +423,10 @@ int check_keys(XEvent *e)
 	switch(key) {
 		case XK_Escape:
 			return 1;
-    case XK_h: {
-      state_help ^= 1;;
-      break; }
+        case XK_h: {
+            state_help ^= 1;;
+            break; }
 		case XK_m:  
-            //cout << key << endl;
             state_menu ^= 1;
 			break;
         case XK_x:
