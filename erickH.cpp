@@ -6,10 +6,10 @@
 #include "fonts.h"
 using namespace std;
 
-void Maverick (int name[], int length) {
-    for (int i = 0; i < length; i++) {
-	cout << name[i];
-	cout << "\n";
+void Maverick () {
+    for (int i = 0; i < 10; i++) {
+	    cout << "mavERICK";
+	    cout << "\n";
     }
 }
     

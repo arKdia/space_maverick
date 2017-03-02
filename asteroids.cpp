@@ -56,6 +56,8 @@ typedef Flt	Matrix[4][4];
 #define VecSub(a,b,c) (c)[0]=(a)[0]-(b)[0]; \
                       (c)[1]=(a)[1]-(b)[1]; \
                       (c)[2]=(a)[2]-(b)[2]
+#define XK_F1  0xffbe
+
 //constants
 const float timeslice = 1.0f;
 const float gravity = -0.2f;
@@ -173,8 +175,7 @@ int h=0;
 //function prototypes
 extern int help(int, int);
 extern void menu( char[], int );
-extern void Maverick( char[], int );
-extern void Maverick ( int[], int);
+extern void Maverick( );
   
 void initXWindows(void);
 void init_opengl(void);
@@ -429,7 +430,7 @@ int check_keys(XEvent *e)
         /*case XK_h: {
             h = help(h, 800);
             break; }*/
-		case XK_m:
+		case XK_m:  
             //cout << key << endl;
             state_menu ^= 1;
 			break;
@@ -735,7 +736,9 @@ void render(Game *g)
 	r.bot = yres - 20;
 	r.left = 10;
 	r.center = 0;
-	//Maverick();
+
+	Maverick();
+
 	ggprint8b(&r, 16, 0x00ff0000, "cs335 - Asteroids");
 	ggprint8b(&r, 16, 0x00ffff00, "n bullets: %i", g->nbullets);
 	ggprint8b(&r, 16, 0x00ffff00, "n asteroids: %i", g->nasteroids);
