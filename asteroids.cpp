@@ -35,8 +35,8 @@
 #include "erickH.cpp"
 
 #include "fonts.h"
-#include "fonts.h"
-#include "andrewP.cpp"
+//#include "fonts.h"
+//#include "andrewP.cpp"
 #include "erickT.cpp"
 
 /*#include <stdio.h>
@@ -106,6 +106,7 @@ void timeCopy(struct timespec *dest, struct timespec *source) {
 
 int xres=1250, yres=900;
 int state_menu = 0;
+int state_help = 0;
 
 struct Ship {
 	Vec dir;
@@ -174,10 +175,9 @@ struct Game {
 };
 
 int keys[65536];
-int h=0;
 
 //function prototypes
-extern int help(int, int);
+extern void help(int);
 void initXWindows(void);
 void init_opengl(void);
 void cleanupXWindows(void);
@@ -426,12 +426,11 @@ int check_keys(XEvent *e)
 	switch(key) {
 		case XK_Escape:
 			return 1;
-        /*case XK_h: {
-            h = help(h, 800);
-            break; }*/
+        	case XK_h: {
+            		state_help ^= 1;;
+            		break; }
 		case XK_m:
-            state_menu ^= 1;
-
+            		state_menu ^= 1;
 			break;
 		case XK_f:
 			break;
@@ -767,6 +766,11 @@ void render(Game *g)
       glDisable(GL_TEXTURE_2D);
       menu();
       //glEnable(GL_TEXTURE_2D);
+    }
+
+    if (state_help) {
+	glDisable(GL_TEXTURE_2D);
+	help(yres);
     }
 
 
