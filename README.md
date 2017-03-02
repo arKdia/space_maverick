@@ -1,4 +1,4 @@
-# space_maverick
+#Space mavERICK
 
  Ericks++: Erick T, Erick H, Andrew P, JT
  
