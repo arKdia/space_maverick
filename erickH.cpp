@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "fonts.h"
+#include <GL/glx.h>
 using namespace std;
 
 void Maverick () {
@@ -12,4 +13,15 @@ void Maverick () {
 	    cout << "\n";
     }
 }
-    
+
+
+void Maverick2 () {
+    char name[10] = {"mavERICK"};
+
+    Rect maverick;
+    glEnable(GL_TEXTURE_2D);
+
+    maverick.bot = yres - 820;
+    maverick.left = 10;
+    maverick.center = 0;
+}
