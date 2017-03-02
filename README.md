@@ -1,4 +1,4 @@
-# space_maverick
+# Space mavERICK
 
  Ericks++: Erick T, Erick H, Andrew P, JT
  
@@ -25,3 +25,5 @@ RANDOM IDEAS:
 	   3rd level 	→ 3 rings of enemies ? 
 
 - Game: have a radar on lower right corner
+
+The one TRUE Tom Cruise simulator
