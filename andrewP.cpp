@@ -17,18 +17,19 @@ using namespace std;
 void help(int yres)
 {
     char text[3][60] = {"Use space to shoot.", 
-	"Use up arrow key for thrust.",
-        "Use left and right arrow keys to change direction."};
+	                    "Use up arrow key for thrust.",
+                        "Use left and right arrow keys to change direction."};
+
     Rect re;
     glEnable(GL_TEXTURE_2D);
 
-    re.bot = yres/11;
+    re.bot = yres / 11;
     re.left = 10;
     re.center = 0;
 
     for (int i = 0; i < 3; i++) {
-	ggprint16 (&re, 0, 0x00aaff00, text[i]);
-	re.bot = re.bot - 30;
+	    ggprint16 (&re, 0, 0x00aaff00, text[i]);
+	    re.bot = re.bot - 30;
     }
 }
 
