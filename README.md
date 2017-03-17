@@ -1,5 +1,7 @@
-# Space mavERICK
 
+#Space mavERICK
+
+Tom Cruise Simulator
  Ericks++: Erick T, Erick H, Andrew P, JT
  
  please modify (syntax included) as needed to make the project design clearer)

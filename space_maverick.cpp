@@ -26,6 +26,7 @@
 #include <X11/keysym.h>
 #include <GL/glx.h>
 #include </usr/include/AL/alut.h>
+
 #include "ppm.h"
 #include "log.h"
 
@@ -178,6 +179,8 @@ extern void menu( char[], int );
 extern void Maverick( );
 extern void Maverick2(int );
 extern void backGround();
+
+
   
 void initXWindows(void);
 void init_opengl(void);
@@ -229,6 +232,7 @@ int main(void)
 	cleanup_fonts();
 	logClose();
 	backGround();
+
 	return 0;
 }
 
