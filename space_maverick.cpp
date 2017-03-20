@@ -16,6 +16,8 @@
 #include <cstring>
 #include <unistd.h>
 #include <ctime>
+//#include <fcntl.h>
+//#include <sys/stat.h>
 #include <cmath>
 #include <X11/Xlib.h>
 //#include <X11/Xutil.h>
@@ -23,6 +25,8 @@
 //#include <GL/glu.h>
 #include <X11/keysym.h>
 #include <GL/glx.h>
+#include </usr/include/AL/alut.h>
+
 #include "ppm.h"
 #include "log.h"
 
@@ -174,6 +178,9 @@ extern void help(int);
 extern void menu( char[], int );
 extern void Maverick( );
 extern void Maverick2(int );
+extern void backGround();
+
+
   
 void initXWindows(void);
 void init_opengl(void);
@@ -194,6 +201,7 @@ int main(void)
 	logOpen();
 	initXWindows();
 	init_opengl();
+	backGround();
 	Game game;
 	init(&game);
 	srand(time(NULL));
@@ -223,6 +231,8 @@ int main(void)
 	cleanupXWindows();
 	cleanup_fonts();
 	logClose();
+	backGround();
+
 	return 0;
 }
 
