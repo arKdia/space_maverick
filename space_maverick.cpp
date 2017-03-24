@@ -26,7 +26,6 @@
 #include <X11/keysym.h>
 #include <GL/glx.h>
 #include </usr/include/AL/alut.h>
-
 #include "ppm.h"
 #include "log.h"
 
@@ -179,8 +178,10 @@ extern void menu( char[], int );
 extern void Maverick( );
 extern void Maverick2(int );
 extern void backGround();
-
-
+extern void initSound();
+extern void blaster();
+extern void expl();
+extern void thrust();
   
 void initXWindows(void);
 void init_opengl(void);
@@ -201,7 +202,8 @@ int main(void)
 	logOpen();
 	initXWindows();
 	init_opengl();
-	backGround();
+	initSound();	// initialize all sound
+	backGround();	// call function to begin backgound music
 	Game game;
 	init(&game);
 	srand(time(NULL));
@@ -231,8 +233,7 @@ int main(void)
 	cleanupXWindows();
 	cleanup_fonts();
 	logClose();
-	backGround();
-
+	backGround();	// recall functions to stop sound and delete sources
 	return 0;
 }
 
@@ -520,12 +521,16 @@ int check_keys(XEvent *e)
 	//This code maintains an array of key status values.
 	if (e->type == KeyRelease) {
 		keys[key]=0;
+		if (key == XK_Up)	// check for up arrow key release
+		    thrust();		// call thrust SFX function
 		if (key == XK_Shift_L || key == XK_Shift_R)
 			shift=0;
 		return 0;
 	}
 	if (e->type == KeyPress) {
 		keys[key]=1;
+		if (key == XK_Up)	// check for up arrow key press
+		    thrust();		// call thrust SFX function
 		if (key == XK_Shift_L || key == XK_Shift_R) {
 			shift=1;
 			return 0;
@@ -733,6 +738,7 @@ void physics(Game *g)
 				if (a->radius > MINIMUM_ASTEROID_SIZE) {
 					//break it into pieces.
 					Asteroid *ta = a;
+					expl();
 					buildAsteroidFragment(ta, a);
 					int r = rand() % 10 + 5;
 					for (int k=0; k<r; k++) {
@@ -753,6 +759,7 @@ void physics(Game *g)
 					//asteroid is too small to break up
 					//delete the asteroid and bullet
 					Asteroid *savea = a->next;
+					expl();
 					deleteAsteroid(g, a);
 					a = savea;
 					g->nasteroids--;
@@ -802,7 +809,7 @@ void physics(Game *g)
 		g->ship.vel[0] += xdir*0.02f;
 		g->ship.vel[1] += ydir*0.02f;
 		Flt speed = sqrt(g->ship.vel[0]*g->ship.vel[0]+
-										g->ship.vel[1]*g->ship.vel[1]);
+			g->ship.vel[1]*g->ship.vel[1]);
 		if (speed > 10.0f) {
 			speed = 10.0f;
 			normalize(g->ship.vel);
@@ -825,6 +832,7 @@ void physics(Game *g)
 			b->pos[1] = g->ship.pos[1];
 			b->vel[0] = g->ship.vel[0];
 			b->vel[1] = g->ship.vel[1];
+			blaster();	// call function to create sound
 			//convert ship angle to radians
 			Flt rad = ((g->ship.angle+90.0f) / 360.0f) * PI * 2.0f;
 			//convert angle to a vector
