@@ -52,7 +52,7 @@ struct BACKGROUNDIMAGE {
     
 void GAMEOVERSCREEN (void) {
 	glEnable(GL_TEXTURE_2D);
-	loadTexture("images/gameover.png");
+//	loadTexture("images/gameover.png");
 }
 
 void showGAMEOVERSCREEN () {
