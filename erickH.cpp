@@ -46,33 +46,32 @@ void MaverickHealth (float health) {
 
 void init_opengl(void)
 {
-	//OpenGL initialization
-	glViewport(0, 0, xres, yres);
-	//Initialize matrices
-	glMatrixMode(GL_PROJECTION); glLoadIdentity();
-	glMatrixMode(GL_MODELVIEW); glLoadIdentity();
-	//This sets 2D mode (no perspective)
-	glOrtho(0, xres, 0, yres, -1, 1);
-	//
-	glDisable(GL_LIGHTING);
-	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_FOG);
-	glDisable(GL_CULL_FACE);
-	//
-	//Clear the screen to black
-	glClearColor(0.0, 0.0, 0.0, 1.0);
-	//Do this to allow fonts
-	glEnable(GL_TEXTURE_2D);
-	initialize_fonts();
+    //OpenGL initialization
+    glViewport(0, 0, xres, yres);
+    //Initialize matrices
+    glMatrixMode(GL_PROJECTION); glLoadIdentity();
+    glMatrixMode(GL_MODELVIEW); glLoadIdentity();
+    //This sets 2D mode (no perspective)
+    glOrtho(0, xres, 0, yres, -1, 1);
+    //
+    glDisable(GL_LIGHTING);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_FOG);
+    glDisable(GL_CULL_FACE);
+    //
+    //Clear the screen to black
+    glClearColor(0.0, 0.0, 0.0, 1.0);
+    //Do this to allow fonts
+    glEnable(GL_TEXTURE_2D);
+    initialize_fonts();
 
-	//Background and Gameover screens for the game. 
+    //Background and Gameover screens for the game. 
+    background = ppm6GetImage("./assets/background.ppm");
+    gameover = ppm6GetImage("./assets/gameover.ppm");
 
-	background = ppm6GetImage("./assets/background.ppm");
-	gameover = ppm6GetImage("./assets/gameover.ppm");
-
-	//------Bullet ---------------------------------------------------
-	glGenTextures(1, &bulletImage);
-	bullet = ppm6GetImage("./assets/basicBullet.ppm");
+    //------Bullet ---------------------------------------------------
+    glGenTextures(1, &bulletImage);
+    bullet = ppm6GetImage("./assets/basicBullet.ppm");
     int bulletW = bullet->width;
     int bulletH = bullet->height;
     glBindTexture(GL_TEXTURE_2D, bulletImage);
@@ -148,6 +147,25 @@ void init_opengl(void)
     glTexImage2D(GL_TEXTURE_2D, 0, 3, powerupW, powerupH, 0, GL_RGB, GL_UNSIGNED_BYTE, powerup->data);
 
     //Function that changes the ship whenever it touches the powerup.
+    //Background
+    glGenTextures(1, &backgroundImage);
+    int backgroundW = background->width;
+    int backgroundH = background->height;
+    glBindTexture(GL_TEXTURE_2D, backgroundImage);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, backgroundW, backgroundH, 0, GL_RGB, GL_UNSIGNED_BYTE, background->data);
 
+    //Game over Screen
+    glGenTextures(1, &gameoverImage);
+    int gameoverW = gameover->width;
+    int gameoverH = gameover->height;
+    glBindTexture(GL_TEXTURE_2D, gameoverImage);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, gameoverW, gameoverH, 0, GL_RGB, GL_UNSIGNED_BYTE, gameover->data);
+
+    glEnable(GL_TEXTURE_2D);
+    initialize_fonts();
     
 }
