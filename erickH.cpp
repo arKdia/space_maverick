@@ -44,39 +44,6 @@ void MaverickHealth (float health) {
 	glEnd();
 }
 
-//Author: Erick Herrera
-//Starting Date: 2/21/2017
-//Group:6  - Space Maverick
-//Role: User Interface/Certain Game Aspects such as Background and Image Assets
-
-#include <iostream>
-#include "fonts.h"
-using namespace std;
-
-void GAMEOVERSCREEN (void);
-void showGAMEOVERSCREEN ();
-
-void Maverick (int name[], int length) {
-    for (int i = 0; i < length; i++) {
-	cout << name[i];
-	cout << "\n";
-    }
-}
-
-void MaverickHealth (float health) {
-	glBegin(GL_QUADS);
-	glColor3f(1, 0, 0);
-	glVertex2f(0, 0);
-	glVertex2f(1, 0);
-	glVertex2f(2, 0);
-	glVertex2f(3, 0);
-	glVertex2f(4, 0);
-	glVertex2f(5, 0);
-	glVertex2f(1, health);
-	glVertex2f(0, health);
-	glEnd();
-}
-
 void init_opengl(void)
 {
 	//OpenGL initialization
