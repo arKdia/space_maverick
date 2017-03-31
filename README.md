@@ -33,7 +33,7 @@ The one TRUE Tom Cruise simulator
 
 
 
-ERICK H COMMENT:
+ERICK H COMMENT: 3:05PM 3/31/17
 =============================================================================================================================
 So we should all go tomorrow to Gordon's lab and just put in some work on the project.
 Note: I have made a header.h file that the project/game desperately needs and have added you all as contributors. The project works properly with the header file. So start adding your work to the repository I added you guys too.
