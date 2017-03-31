@@ -29,3 +29,14 @@ RANDOM IDEAS:
 - Game: have a radar on lower right corner
 
 The one TRUE Tom Cruise simulator
+
+
+
+
+ERICK H COMMENT:
+=============================================================================================================================
+So we should all go tomorrow to Gordon's lab and just put in some work on the project.
+Note: I have made a header.h file that the project/game desperately needs and have added you all as contributors. The project works properly with the header file. So start adding your work to the repository I added you guys too.
+This was done so that everyone can access the functions since I cannot and I really need to to upload and render pictures. 
+See you guys tomorrow. 
+
