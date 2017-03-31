@@ -158,12 +158,14 @@ struct Game {
 	struct timespec bulletTimer;
     struct timespec mouseThrustTimer;
     bool mouseThrustOn;
+	bool mouseControl;
 	Game() {
 		ahead = NULL;
 		barr = new Bullet[MAX_BULLETS];
 		nasteroids = 0;
 		nbullets = 0;
         mouseThrustOn = false;
+		mouseControl = false;
 	}
     ~Game() {
       delete [] barr;
@@ -283,7 +285,8 @@ void initXWindows(void)
 	set_title();
 	glc = glXCreateContext(dpy, vi, NULL, GL_TRUE);
 	glXMakeCurrent(dpy, win, glc);
-    show_mouse_cursor(0);
+	//show mouse? 1 yes || 0 no
+	show_mouse_cursor(1);
 }
 
 void reshape_window(int width, int height)
@@ -471,6 +474,7 @@ void check_mouse(XEvent *e, Game *g)
 		//std::cout << "savex: " << savex << std::endl << std::flush;
 		//std::cout << "e->xbutton.x: " << e->xbutton.x << std::endl <<
 		//std::flush;
+		if(g->mouseControl) {
 		if (xdiff > 0) {
 			//std::cout << "xdiff: " << xdiff << std::endl << std::flush;
 			g->ship.angle += 0.05f * (float)xdiff;
@@ -506,6 +510,7 @@ void check_mouse(XEvent *e, Game *g)
 		set_mouse_position(100,100);
 		savex=100;
 		savey=100;
+		}
 	}
 
 }
